@@ -6,6 +6,9 @@
 //! Copyright (c) 2025 Luna Moonlit Noir <lunaNoir.sk@gmail.com>
 //! GNU General Public License v3.0
 
+use std::fs::File;
+use std::sync::{Arc, Mutex, OnceLock};
+use std::io::Write;
 use chrono::Local;
 use colored::*;
 
@@ -78,6 +81,8 @@ pub enum LogLevel {
 pub struct Hagja {
     id: &'static str,
     log_level: LogLevel,
+    write_file: bool,
+    file: Option<Arc<Mutex<File>>>,
 }
 
 impl Hagja {
@@ -86,11 +91,11 @@ impl Hagja {
     /// # Example
     /// ```
     /// use hagja::*;
-    /// let logger = Hagja::new("MyModule", LogLevel::Info);
+    /// let logger = Hagja::new("MyModule", LogLevel::Info, false, None);
     /// info!("Intializing...");
     /// ```
-    pub const fn new(id: &'static str, log_level: LogLevel) -> Self {
-        Self { id, log_level }
+    pub const fn new(id: &'static str, log_level: LogLevel, write_file: bool, file: Option<Arc<Mutex<File>>>) -> Self {
+        Self { id, log_level, file, write_file }
     }
 
     fn emit(&self, level: LogLevel, msg: &str) {
@@ -112,6 +117,14 @@ impl Hagja {
         };
 
         println!("{}", clog);
+
+        if self.write_file {
+            if let Some(file_mutex) = &self.file {
+                if let Ok(mut file) = file_mutex.lock() {
+                    let _ = writeln!(file, "{}", log);
+                }
+            }
+        }
     }
 
     fn get_level_name(&self, level: &LogLevel) -> &'static str {
@@ -148,8 +161,6 @@ impl std::fmt::Debug for Hagja {
     }
 }
 
-use std::sync::OnceLock;
-
 static DEFAULT_LOGGER: OnceLock<Hagja> = OnceLock::new();
 
 /// Set the default logger instance for macros.
@@ -159,5 +170,5 @@ pub fn set_default_logger(logger: Hagja) -> Result<(), Hagja> {
 
 /// Get the current default logger instance.
 pub fn get_default_logger() -> &'static Hagja {
-    DEFAULT_LOGGER.get_or_init(|| Hagja::new("default", LogLevel::Info))
+    DEFAULT_LOGGER.get_or_init(|| Hagja::new("default", LogLevel::Info, false, None))
 }

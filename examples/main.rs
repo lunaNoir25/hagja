@@ -1,8 +1,11 @@
 use hagja::*;
+// use std::fs::File;
+// use std::sync::{Arc, Mutex};
 
 fn main() {
     let id = "Examples/Main";
-    let logger: Hagja = Hagja::new(id, LogLevel::Trace);
+    // let file = File::create("./log.txt").ok().map(|f| Arc::new(Mutex::new(f)));
+    let logger: Hagja = Hagja::new(id, LogLevel::Trace, false, None);
 
     set_default_logger(logger).expect("Error, unable to set default logger.");
 
@@ -11,5 +14,5 @@ fn main() {
     warn!("Unable to get specific resource.");
     error!("Cannot initialize.");
     fatal!("Corruption detected, exiting.");
-    trace!("Cleaning resource cache 3."); 
+    trace!("Cleaning resource cache 4."); 
 }
