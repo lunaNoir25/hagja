@@ -1,4 +1,5 @@
 use chrono::Local;
+use colored::*;
 
 pub enum LogLevel {
     Info,
@@ -7,19 +8,6 @@ pub enum LogLevel {
     Error,
     Fatal,
     Trace,
-}
-
-impl LogLevel {
-    fn as_str(&self) -> &'static str {
-        match self {
-            LogLevel::Info  => "INFO",
-            LogLevel::Debug => "DEBUG",
-            LogLevel::Warn  => "WARN",
-            LogLevel::Error => "ERROR",
-            LogLevel::Fatal => "FATAL",
-            LogLevel::Trace => "TRACE",
-        }
-    }
 }
 
 pub struct Hagja {
@@ -32,11 +20,31 @@ impl Hagja {
     }
 
     fn emit(&self, level: LogLevel, msg: &str) {
-        let now = Local::now();
-        let time = now.format("%H:%M:%S");
-        let level_str = level.as_str();
+        let time = Local::now().format("%H:%M:%S");
         
-        println!("[{}] [{}] [{}]: {}", time, level_str, self.id, msg);
+        let log = format!("[{}] [{: <5}] [{}]: {}", time, self.get_level_name(&level), self.id, msg);
+        
+        let clog = match level {
+            LogLevel::Info  => log.white(),
+            LogLevel::Debug => log.blue(),
+            LogLevel::Warn  => log.yellow(),
+            LogLevel::Error => log.bright_red(),
+            LogLevel::Fatal => log.red().underline(),
+            LogLevel::Trace => log.bright_black(),
+        };
+
+        println!("{}", clog);
+    }
+
+    fn get_level_name(&self, level: &LogLevel) -> &'static str {
+        match level {
+            LogLevel::Info  => "INFO",
+            LogLevel::Debug => "DEBUG",
+            LogLevel::Warn  => "WARN",
+            LogLevel::Error => "ERROR",
+            LogLevel::Fatal => "FATAL",
+            LogLevel::Trace => "TRACE",
+        }
     }
 
     pub fn info(&self, msg: &str)  { self.emit(LogLevel::Info, msg); }
