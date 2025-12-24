@@ -1,16 +1,15 @@
-use hagja::Hagja;
+use hagja::*;
 
 fn main() {
     let id = "Examples/Main";
-    let logger: Hagja = Hagja::new(
-        id,
-        hagja::LogLevel::Trace,
-    );
+    let logger: Hagja = Hagja::new(id, LogLevel::Trace);
 
-    logger.info("Starting...");
-    logger.debug("Executing...");
-    logger.warn("Unable to get specific resource.");
-    logger.error("Cannot intialize.");
-    logger.fatal("Corruption detected, exiting.");
-    logger.trace("Cleaning resource cache 3.");
+    set_default_logger(logger).expect("Error, unable to set default logger.");
+
+    info!("Starting...");
+    debug!("Executing...");
+    warn!("Unable to get specific resource.");
+    error!("Cannot initialize.");
+    fatal!("Corruption detected, exiting.");
+    trace!("Cleaning resource cache 3."); 
 }
