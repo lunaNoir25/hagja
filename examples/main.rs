@@ -2,7 +2,10 @@ use hagja::Hagja;
 
 fn main() {
     let id = "Examples/Main";
-    let logger: Hagja = Hagja::new(id);
+    let logger: Hagja = Hagja::new(
+        id,
+        hagja::LogLevel::Trace,
+    );
 
     logger.info("Starting...");
     logger.debug("Executing...");

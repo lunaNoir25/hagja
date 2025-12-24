@@ -1,25 +1,31 @@
 use chrono::Local;
 use colored::*;
 
+#[derive(PartialEq, PartialOrd)]
 pub enum LogLevel {
-    Info,
-    Debug,
-    Warn,
-    Error,
-    Fatal,
-    Trace,
+    Info = 2,
+    Debug = 1,
+    Warn = 3,
+    Error = 4,
+    Fatal = 5,
+    Trace = 0,
 }
 
 pub struct Hagja {
     id: &'static str,
+    log_level: LogLevel,
 }
 
 impl Hagja {
-    pub const fn new(id: &'static str) -> Self {
-        Self { id }
+    pub const fn new(id: &'static str, log_level: LogLevel) -> Self {
+        Self { id, log_level }
     }
 
     fn emit(&self, level: LogLevel, msg: &str) {
+        if level < self.log_level {
+            return;
+        }
+
         let time = Local::now().format("%H:%M:%S");
         
         let log = format!("[{}] [{: <5}] [{}]: {}", time, self.get_level_name(&level), self.id, msg);
