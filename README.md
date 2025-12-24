@@ -25,3 +25,7 @@ info!("Hello, world!");
 `write_file: bool` = Write to output file or not.
 
 `file: Option<Arc<Mutex<File>>>` = Set to `None` if `write_file` is set to false. Requires `std::fs::File` and `std::sync::{Arc, Mutex}`. Prior file creation needed first.
+
+## Installation
+
+Simply run `cargo add hagja` and you're set.
