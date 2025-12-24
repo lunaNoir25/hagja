@@ -19,6 +19,9 @@ info!("Hello, world!");
 ### Hagja::new()
 
 `id: &'static str` = Unique identifer for your project.
+
 `log_level: LogLevel` = Log level, use info for consumer ready use, debug or trace for development use.
+
 `write_file: bool` = Write to output file or not.
+
 `file: Option<Arc<Mutex<File>>>` = Set to `None` if `write_file` is set to false. Requires `std::fs::File` and `std::sync::{Arc, Mutex}`. Prior file creation needed first.
