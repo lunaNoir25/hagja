@@ -1,0 +1,13 @@
+[package]
+name = "hagja"
+version = "1.0.0"
+edition = "2024"
+authors = ["lunaNoir <lunaNoir.sk@gmail.com>"]
+description = "A lightweight and robust logger system for Rust."
+license = "GNU General Public License v3.0"
+repository = "https://github.com/lunaNoir25/hagja"
+readme = "README.md"
+keywords = ["logger", "logging", "logger-system", "lightweight", "lightweight-logger", "robust", "robust-logger", "luna", "lunaNoir", "lunaNoir25"]
+categories = ["development-tools::debugging"]
+
+[dependencies]
