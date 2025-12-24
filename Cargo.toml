@@ -9,10 +9,6 @@ repository = "https://github.com/lunaNoir25/hagja"
 readme = "README.md"
 keywords = ["logger", "logging", "logger-system", "lightweight", "lightweight-logger", "robust", "robust-logger", "luna", "lunaNoir", "lunaNoir25"]
 categories = ["development-tools::debugging"]
-exclude = [
-    "examples/*",
-    ".cargo_vcs_info.json"
-]
 
 [dependencies]
 chrono = "0.4.42"
