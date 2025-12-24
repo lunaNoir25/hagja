@@ -11,3 +11,4 @@ keywords = ["logger", "logging", "logger-system", "lightweight", "lightweight-lo
 categories = ["development-tools::debugging"]
 
 [dependencies]
+chrono = "0.4.42"

@@ -1,14 +1,17 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+mod data;
+
+pub struct Hagja {
+    id: &'static str,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+impl Hagja {
+    pub const fn new(id: &'static str) -> Self {
+        Self {
+            id: id,
+        }
+    }
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    pub fn info(&self, msg: &str) {
+        println!("[{}] [INFO] [{}]: {}", data::get_time(), self.id, msg);
     }
 }
